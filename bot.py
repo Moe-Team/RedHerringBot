@@ -1,15 +1,30 @@
 import discord
 from discord.ext import commands
 import aiohttp
-
+import threading
+import time
+from bot_irc import create_irc_connection
+from bot_manager import BotManager
 
 description = """Work in progress."""
 
 bot = commands.Bot(command_prefix='r!', description=description)
+irc_connection = None
+bot_manager = None
+
+
+def process_irc(irc):
+    while True:
+        time.sleep(1/60)
+        irc.process()
 
 
 @bot.event
 async def on_ready():
+    bot_manager = BotManager(bot)
+    irc_connection = create_irc_connection()
+    irc_connection.on_first_join_handler = bot_manager.on_irc_join
+    threading.Thread(target=process_irc, args=(irc_connection,)).start()
     print("Logged in")
 
 
