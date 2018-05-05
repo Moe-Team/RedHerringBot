@@ -4,4 +4,4 @@ class BotManager:
         self.bot = bot
     
     def on_irc_join(self):
-        await bot.say("Connected to IRC.")
+        print("Connected to IRC.")
