@@ -25,7 +25,7 @@ async def on_ready():
     irc_connection = create_irc_connection()
     irc_connection.on_first_join_handler = bot_manager.on_irc_join
     threading.Thread(target=process_irc, args=(irc_connection,)).start()
-    print("Logged in")
+    print("Logged in.")
 
 
 @bot.event
