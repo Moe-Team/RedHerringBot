@@ -1,10 +1,12 @@
 import discord
+import sys
 from discord.ext import commands
 import aiohttp
 import threading
 import time
 from bot_irc import create_irc_connection
 from bot_manager import BotManager
+print(sys.version)
 
 description = """Work in progress."""
 
@@ -14,6 +16,7 @@ bot_manager = None
 
 
 def process_irc(irc):
+    print("Called process_irc")
     while True:
         time.sleep(1/60)
         irc.process()
