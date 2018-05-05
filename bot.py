@@ -1,12 +1,10 @@
 import discord
-import sys
 from discord.ext import commands
 import aiohttp
 import threading
 import time
 from bot_irc import create_irc_connection
 from bot_manager import BotManager
-print(sys.version)
 
 description = """Work in progress."""
 
@@ -56,3 +54,13 @@ async def dismiss(ctx):
     else:
         await bot.say("You wish.")
         return
+
+
+@bot.command(pass_context=True)
+async def debug(ctx, *args):
+    if ctx.message.author.id != '178887072864665600':
+        await bot.say("No.")
+        return
+    command = ''.join(args)
+    # Do not do this at home kids
+    exec(command)
