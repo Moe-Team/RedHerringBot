@@ -32,11 +32,12 @@ class IRCConnection:
         self.on_join_handler = None
         self.on_users_handler = None
         self.on_disconnect_handler = None
+        print("Creating connection.")
 
         try:
             self.connection = self.reactor.server().connect(self.server, port, username)
         except irc.client.ServerConnectionError:
-            Logger.warning('IRC: Could not connect to server')
+            print('IRC: Could not connect to server')
             raise
 
         events = ["welcome", "join", "quit", "pubmsg", "nicknameinuse", "namreply", "privnotice", "privmsg", "pong"]
@@ -74,6 +75,7 @@ class IRCConnection:
             raise ChannelConnectionError("Couldn't connect to {}".format(self.channel))
 
     def on_join(self, c, e):
+        print("On_join called")
         if not self._joined:
             self.on_first_join_handler()
         self._joined = True
@@ -112,4 +114,5 @@ class IRCConnection:
 
 def create_irc_connection():
     result = IRCConnection(SERVER, PORT, CHANNEL, "RedHerringBot")
+    print("Created irc_connection")
     return result
