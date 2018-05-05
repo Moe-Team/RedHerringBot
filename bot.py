@@ -8,10 +8,6 @@ from bot_manager import BotManager
 
 description = """Work in progress."""
 
-bot = commands.Bot(command_prefix='r!', description=description)
-irc_connection = None
-bot_manager = None
-
 
 def process_irc(irc):
     print("Called process_irc")
@@ -20,12 +16,15 @@ def process_irc(irc):
         irc.process()
 
 
+bot = commands.Bot(command_prefix='r!', description=description)
+bot_manager = BotManager(bot)
+irc_connection = create_irc_connection()
+irc_connection.on_first_join_handler = bot_manager.on_irc_join
+threading.Thread(target=process_irc, args=(irc_connection,)).start()
+
+
 @bot.event
 async def on_ready():
-    bot_manager = BotManager(bot)
-    irc_connection = create_irc_connection()
-    irc_connection.on_first_join_handler = bot_manager.on_irc_join
-    threading.Thread(target=process_irc, args=(irc_connection,)).start()
     print("Logged in.")
 
 
