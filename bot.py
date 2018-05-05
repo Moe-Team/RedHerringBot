@@ -9,18 +9,7 @@ from bot_manager import BotManager
 description = """Work in progress."""
 
 
-def process_irc(irc):
-    print("Called process_irc")
-    while True:
-        time.sleep(1/60)
-        irc.process()
-
-
 bot = commands.Bot(command_prefix='r!', description=description)
-bot_manager = BotManager(bot)
-irc_connection = create_irc_connection()
-irc_connection.on_first_join_handler = bot_manager.on_irc_join
-threading.Thread(target=process_irc, args=(irc_connection,)).start()
 
 
 @bot.event
@@ -63,3 +52,13 @@ async def debug(ctx, *args):
     command = ' '.join(args)
     # Do not do this at home kids
     exec(command, globals(), locals())
+
+
+@bot.command(pass_context=True)
+async def create_irc(ctx, server: str, port: int, username: str):
+    bot_manager = BotManager(bot)
+    irc_connection = create_own_connection(server, port, username)
+    def test_irc(*args):
+        while True:
+            irc_connection.process()
+    threading.Thread(target=test_irc, args=(irc_connection,)).start()

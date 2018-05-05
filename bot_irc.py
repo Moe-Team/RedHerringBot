@@ -69,6 +69,7 @@ class IRCConnection:
         self.reactor.process_once()
 
     def on_welcome(self, c, e):
+        print("on_welcome")
         if irc.client.is_channel(self.channel):
             c.join(self.channel)
         else:
@@ -116,3 +117,9 @@ def create_irc_connection():
     result = IRCConnection(SERVER, PORT, CHANNEL, "RedHerringBot")
     print("Created irc_connection")
     return result
+
+
+def create_own_connection(server, port, username):
+    irc = IRCConnection(server, port, '##mysteryonline', username)
+    return irc
+
