@@ -1,1 +1,1 @@
-worker: python launcher.py
+bot: python launcher.py
