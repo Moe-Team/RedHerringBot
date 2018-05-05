@@ -3,7 +3,7 @@ from discord.ext import commands
 import aiohttp
 import threading
 import time
-from bot_irc import create_irc_connection
+from bot_irc import create_irc_connection, create_own_connection
 from bot_manager import BotManager
 
 description = """Work in progress."""
