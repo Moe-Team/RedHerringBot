@@ -60,6 +60,6 @@ async def debug(ctx, *args):
     if ctx.message.author.id != '178887072864665600':
         await bot.say("No.")
         return
-    command = ''.join(args)
+    command = ' '.join(args)
     # Do not do this at home kids
     exec(command, globals(), locals())
