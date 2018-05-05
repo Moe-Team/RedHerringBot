@@ -63,4 +63,4 @@ async def debug(ctx, *args):
         return
     command = ''.join(args)
     # Do not do this at home kids
-    exec(command, globals(, locals()))
+    exec(command, globals(), locals())
