@@ -66,6 +66,7 @@ class IRCConnection:
         return self._joined
 
     def process(self):
+        print("Processing")
         self.reactor.process_once()
 
     def on_welcome(self, c, e):
